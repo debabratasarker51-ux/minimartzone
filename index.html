@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MiniMart Zone — plants, decor, toys, accessories &amp; daily helpers. Cash on delivery in Rajshahi." />
+  <title>MiniMart Zone · Rajshahi COD</title>
+  <link rel="icon" href="logo.png" type="image/png" sizes="any" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="notice-banner" role="status">
+    <p class="notice-banner__row">
+      <span class="notice-banner__pill">Cash on delivery</span>
+      <span class="notice-banner__sep" aria-hidden="true">·</span>
+      <span class="notice-banner__muted">Rajshahi</span>
+      <span class="notice-banner__sep" aria-hidden="true">·</span>
+      <span>In-zone <strong class="notice-banner__accent">৳60</strong></span>
+      <span class="notice-banner__sep" aria-hidden="true">·</span>
+      <span>Extended <strong class="notice-banner__accent">৳120</strong></span>
+    </p>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="site-header__inner">
+      <a href="#shop" class="logo" aria-label="MiniMart Zone — shop">
+        <span class="logo__mark" aria-hidden="true">
+          <img class="logo__mark-img" src="logo.png" alt="" width="40" height="40" decoding="async" />
+        </span>
+        <span class="logo__text">MiniMart Zone</span>
+      </a>
+      <p class="header-meta" title="Delivery to Shaheb Bazar, Laxmipur, Kazla and selected addresses across Rajshahi. Fees: ৳60 in-zone, ৳120 extended.">
+        <svg class="header-meta__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 21s-7-4.35-7-10a7 7 0 1 1 14 0c0 5.65-7 10-7 10z" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="12" cy="11" r="2.5" />
+        </svg>
+        <span class="header-meta__text"><span class="header-meta__strong">Rajshahi</span> delivery</span>
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__grid" aria-hidden="true">
+        <div class="hero__line hero__line--tl"></div>
+        <div class="hero__line hero__line--br"></div>
+      </div>
+      <div class="hero__orb" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <p class="hero__eyebrow">Home &amp; lifestyle store</p>
+        <h1 class="hero__title">MiniMart Zone</h1>
+        <p class="hero__lede">Indoor plants, decorative stones, toys, accessories and room accents — curated for everyday spaces.</p>
+        <div class="hero__actions">
+          <a href="#shop" class="btn btn--hero btn--hero-primary">
+            <img class="btn--hero__icon" src="logo.png" alt="" width="22" height="22" decoding="async" />
+            Browse products
+          </a>
+          <a href="#how-ordering" class="btn btn--hero btn--hero-secondary">How ordering works</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shop" aria-labelledby="shop-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="section-head__eyebrow" id="shop-eyebrow">Catalog</p>
+          <h2 id="shop-title" class="section-head__title">Shop the collection</h2>
+          <p class="section-head__desc">Tap <strong>Order Now</strong> on any item — we open WhatsApp with your details. Pay cash when your order arrives.</p>
+        </header>
+
+        <div class="shop-toolbar glass-panel">
+          <div class="shop-toolbar__search-wrap">
+            <svg class="shop-toolbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3-3" stroke-linecap="round" />
+            </svg>
+            <input type="search" id="productSearch" class="shop-toolbar__search" placeholder="Search products…" autocomplete="off" aria-label="Search products" />
+          </div>
+          <div class="shop-toolbar__filters" id="shopFilters" role="group" aria-label="Filter by category"></div>
+        </div>
+
+        <p id="shopLoading" class="shop-loading">Loading products…</p>
+        <p id="shopLoadError" class="shop-load-error is-hidden" role="alert"></p>
+        <p id="shopEmpty" class="shop-empty">No products match your search or filter.</p>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="how-ordering">
+    <div class="container site-footer__inner">
+      <p class="site-footer__lead">How ordering works</p>
+      <ol class="site-footer__steps">
+        <li>Choose a product and tap <strong>Order Now</strong>.</li>
+        <li>Fill your details — we open WhatsApp with your order text.</li>
+        <li>We reply on WhatsApp to confirm stock and delivery time.</li>
+        <li>Pay the rider in cash when your parcel arrives (COD).</li>
+      </ol>
+      <p class="site-footer__note">Delivery charges are shown on your WhatsApp message based on your area. Questions? Use the same WhatsApp after you send an order.</p>
+      <p class="site-footer__areas">MiniMart Zone · Rajshahi</p>
+    </div>
+  </footer>
+
+  <div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle" aria-hidden="true">
+    <div class="modal__dialog glass-panel">
+      <div class="modal__head">
+        <h2 id="orderModalTitle" class="modal__title">Complete your order</h2>
+        <button type="button" class="modal__close" id="orderModalClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="orderForm" novalidate>
+        <p class="modal__hint" id="orderModalHint">Sending the form opens WhatsApp with your details. Your order is confirmed only after we reply there.</p>
+        <div class="form-field" data-field-wrap="product">
+          <label for="orderProduct">Product</label>
+          <input type="text" id="orderProduct" name="product" readonly />
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="form-field" data-field-wrap="quantity">
+          <label for="orderQuantity">Quantity</label>
+          <input type="number" id="orderQuantity" name="quantity" min="1" max="99" value="1" inputmode="numeric" autocomplete="off" />
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="order-summary" id="orderSummary" aria-live="polite" hidden></div>
+        <input type="hidden" id="orderUnitPriceBdt" name="unitPriceBdt" value="" />
+        <div class="form-field" data-field-wrap="name">
+          <label for="orderCustomerName">Customer name</label>
+          <input type="text" id="orderCustomerName" name="customerName" autocomplete="name" />
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="form-field" data-field-wrap="phone">
+          <label for="orderPhone">Phone number</label>
+          <input type="tel" id="orderPhone" name="phone" autocomplete="tel" inputmode="tel" />
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="form-field" data-field-wrap="area">
+          <label for="orderArea">Delivery area</label>
+          <select id="orderArea" name="area" autocomplete="address-level2">
+            <option value="">Select area…</option>
+            <option value="Shaheb Bazar">Shaheb Bazar</option>
+            <option value="Laxmipur">Laxmipur</option>
+            <option value="Kazla">Kazla</option>
+            <option value="Other (Rajshahi — outside listed zones)">Other (Rajshahi — outside listed zones) — ৳120 delivery</option>
+          </select>
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="form-field" data-field-wrap="address">
+          <label for="orderAddress">Full address</label>
+          <textarea id="orderAddress" name="address" rows="3" autocomplete="street-address"></textarea>
+          <p class="form-field__error" role="alert"></p>
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" id="orderModalCancel">Cancel</button>
+          <button type="submit" class="btn btn--primary">Confirm Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Fallback catalog: file:// blocks fetch of JSON. Keep in sync with data/products.json. -->
+  <script type="application/json" id="shop-catalog-fallback">
+{"products":[{"name":"Mini Fiddle Leaf Fig (indoor)","price":"890","category":"indoor_plants","image":"https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=600&q=80","alt":"Green indoor plant in pot","badges":["popular"]},{"name":"Succulent trio set (ceramic pots)","price":"650","category":"indoor_plants","image":"https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=600&q=80","alt":"Small succulents in pots","badges":["new"]},{"name":"Decorative river pebbles (2kg, mixed color)","price":"320","category":"colorful_stones","image":"https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=600&q=80","alt":"Smooth colorful stones","badges":[]},{"name":"Polished agate-style stones (bowl filler)","price":"480","category":"colorful_stones","image":"https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80","alt":"Polished decorative stones","badges":["popular"]},{"name":"Soft plush bear (medium)","price":"750","category":"toys","image":"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80","alt":"Teddy bear toy","badges":[]},{"name":"LED fairy lights (10m, warm white)","price":"420","category":"room_decoration","image":"https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=600&q=80","alt":"String lights decoration","badges":["new"]},{"name":"Macrame wall hanging (cream)","price":"1,150","category":"room_decoration","image":"https://images.unsplash.com/photo-1523419409543-0c1df022bdd1?w=600&q=80","alt":"Macrame decor on wall","badges":["popular"]},{"name":"Desk organizer (bamboo)","price":"680","category":"daily_helpers","image":"https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&q=80","alt":"Bamboo desk organizer","badges":[]},{"name":"Adjustable phone / tablet stand","price":"390","category":"accessories","image":"https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80","alt":"Phone stand on desk","badges":[]},{"name":"Minimal ceramic vase (matte white)","price":"560","category":"room_decoration","image":"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600&q=80","alt":"White ceramic vase","badges":[]}]}
+  </script>
+  <script src="js/config.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

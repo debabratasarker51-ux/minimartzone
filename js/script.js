@@ -18,7 +18,13 @@
         })
       : ["Shaheb Bazar", "Laxmipur", "Kazla"];
 
-  var PRODUCTS_URL = "data/products.json";
+  var PRODUCTS_URL = (function () {
+    try {
+      return new URL("data/products.json", window.location.href).href;
+    } catch (err) {
+      return "data/products.json";
+    }
+  })();
 
   var header = document.getElementById("siteHeader");
   var modal = document.getElementById("orderModal");
@@ -313,14 +319,13 @@
         address: String(form.querySelector("#orderAddress").value || "").trim(),
       };
 
-      window.setTimeout(function () {
-        openWhatsApp(buildWhatsAppMessage(data));
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove("is-loading");
-        }
-        closeModal();
-      }, 900);
+      /* Open WhatsApp in the same user-gesture turn so mobile browsers do not block the tab. */
+      openWhatsApp(buildWhatsAppMessage(data));
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("is-loading");
+      }
+      closeModal();
     });
   }
 
@@ -368,7 +373,9 @@
       activeCategory = f;
       var chips = filterWrap.querySelectorAll("[data-filter]");
       for (var k = 0; k < chips.length; k++) {
-        chips[k].classList.toggle("is-active", chips[k] === btn);
+        var isOn = chips[k] === btn;
+        chips[k].classList.toggle("is-active", isOn);
+        chips[k].setAttribute("aria-pressed", isOn ? "true" : "false");
       }
       applyFilters();
     });
@@ -404,6 +411,7 @@
       b.type = "button";
       b.className = "filter-chip" + (isActive ? " is-active" : "");
       b.setAttribute("data-filter", id);
+      b.setAttribute("aria-pressed", isActive ? "true" : "false");
       b.textContent = label;
       filterWrap.appendChild(b);
     }
@@ -494,6 +502,10 @@
       im.width = 600;
       im.height = 480;
       im.loading = "lazy";
+      im.addEventListener("error", function onImgErr() {
+        im.removeEventListener("error", onImgErr);
+        if (im.src !== PLACEHOLDER_IMG) im.src = PLACEHOLDER_IMG;
+      });
       imgWrap.appendChild(im);
       article.appendChild(imgWrap);
 
@@ -552,9 +564,11 @@
   /** Inline copy for file:// — same shape as data/products.json. */
   function readEmbeddedCatalog() {
     var el = document.getElementById("shop-catalog-fallback");
-    if (!el || !String(el.textContent || "").trim()) return null;
+    if (!el) return null;
+    var raw = String(el.textContent || "").trim();
+    if (!raw) return null;
     try {
-      return JSON.parse(el.textContent);
+      return JSON.parse(raw);
     } catch (e) {
       return null;
     }
@@ -570,7 +584,15 @@
   }
 
   function start() {
-    fetch(PRODUCTS_URL)
+    if (window.location.protocol === "file:") {
+      var fileEmbedded = readEmbeddedCatalog();
+      if (normalizeProducts(fileEmbedded).length) {
+        applyCatalogData(fileEmbedded);
+        return;
+      }
+    }
+
+    fetch(PRODUCTS_URL, { credentials: "same-origin" })
       .then(function (res) {
         if (!res.ok) {
           throw new Error("HTTP " + res.status);
@@ -578,6 +600,14 @@
         return res.json();
       })
       .then(function (data) {
+        var products = normalizeProducts(data);
+        if (!products.length) {
+          var embEmpty = readEmbeddedCatalog();
+          if (normalizeProducts(embEmpty).length) {
+            applyCatalogData(embEmpty);
+            return;
+          }
+        }
         applyCatalogData(data);
       })
       .catch(function () {
@@ -587,7 +617,7 @@
           applyCatalogData(embedded);
         } else {
           showLoadError(
-            "Product list could not be loaded. Serve the folder over HTTP (e.g. VS Code Live Server) so data/products.json can load, or keep the embedded catalog block in minimart.html in sync with that file."
+            "Product list could not be loaded. Serve the folder over HTTP (e.g. VS Code Live Server) so data/products.json can load, or keep the embedded catalog block in index.html in sync with that file."
           );
         }
       });

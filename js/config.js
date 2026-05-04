@@ -1,7 +1,7 @@
 /**
- * Shop configuration — WhatsApp receives order messages from “Confirm Order”.
+ * Shop configuration — WhatsApp receives order messages from Confirm Order.
  * whatsappNumber: country code + number, digits only (no + or spaces).
- * 01733488751 → 8801733488751
+ * 01733488751 -> 8801733488751
  */
 window.MiniMartConfig = {
   whatsappNumber: "8801733488751",
