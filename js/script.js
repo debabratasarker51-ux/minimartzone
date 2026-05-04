@@ -6,17 +6,20 @@
 
   var CFG = typeof window !== "undefined" && window.MiniMartConfig ? window.MiniMartConfig : {};
   var WHATSAPP_NUMBER = String(CFG.whatsappNumber || "8801733488751").replace(/\D/g, "");
-  var DELIVERY_INSIDE = Number(CFG.deliveryFeeInsideBdt) || 60;
-  var DELIVERY_OUTSIDE = Number(CFG.deliveryFeeOutsideBdt) || 120;
-  var OUTSIDE_AREA_VALUE =
-    String(CFG.outsideDeliveryAreaValue || "Other (Rajshahi — outside listed zones)").trim() ||
-    "Other (Rajshahi — outside listed zones)";
-  var INSIDE_AREAS =
-    Array.isArray(CFG.insideDeliveryAreas) && CFG.insideDeliveryAreas.length
-      ? CFG.insideDeliveryAreas.map(function (a) {
-          return String(a).trim();
-        })
-      : ["Shaheb Bazar", "Laxmipur", "Kazla"];
+  var SERVICE_WARDS = [];
+  if (Array.isArray(CFG.serviceWards) && CFG.serviceWards.length) {
+    SERVICE_WARDS = CFG.serviceWards.map(function (w) {
+      return String(w).trim();
+    });
+  }
+  var WARD_FEES = {};
+  if (CFG.wardDeliveryBdt && typeof CFG.wardDeliveryBdt === "object") {
+    for (var fk in CFG.wardDeliveryBdt) {
+      if (Object.prototype.hasOwnProperty.call(CFG.wardDeliveryBdt, fk)) {
+        WARD_FEES[String(fk).trim()] = Number(CFG.wardDeliveryBdt[fk]);
+      }
+    }
+  }
 
   var PRODUCTS_URL = (function () {
     try {
@@ -41,11 +44,37 @@
 
   var activeCategory = "all";
 
+  function isServiceWard(area) {
+    return SERVICE_WARDS.indexOf(String(area || "").trim()) !== -1;
+  }
+
   function deliveryFeeBdtForArea(area) {
-    var a = String(area || "").trim();
-    if (a === OUTSIDE_AREA_VALUE) return DELIVERY_OUTSIDE;
-    if (INSIDE_AREAS.indexOf(a) !== -1) return DELIVERY_INSIDE;
-    return DELIVERY_INSIDE;
+    var key = String(area || "").trim();
+    if (!isServiceWard(key)) return null;
+    var n = WARD_FEES[key];
+    if (n == null || isNaN(n) || n < 0) return null;
+    return Math.round(n);
+  }
+
+  function populateServiceWardSelect() {
+    var sel = document.getElementById("orderArea");
+    if (!sel || !SERVICE_WARDS.length) return;
+    var placeholder = sel.querySelector('option[value=""]');
+    var phText = placeholder ? placeholder.textContent : "Select your ward…";
+    sel.replaceChildren();
+    var o0 = document.createElement("option");
+    o0.value = "";
+    o0.textContent = phText;
+    sel.appendChild(o0);
+    for (var i = 0; i < SERVICE_WARDS.length; i++) {
+      var w = SERVICE_WARDS[i];
+      if (!w) continue;
+      var fee = deliveryFeeBdtForArea(w);
+      var opt = document.createElement("option");
+      opt.value = w;
+      opt.textContent = fee != null ? w + " — ৳" + String(fee) + " delivery" : w;
+      sel.appendChild(opt);
+    }
   }
 
   function formatBdt(n) {
@@ -83,7 +112,7 @@
 
     if (area && delivery != null) {
       parts.push(
-        "<div class=\"order-summary__row\"><span>Delivery (by area)</span><span>" +
+        "<div class=\"order-summary__row\"><span>Delivery (this ward)</span><span>" +
           formatBdt(delivery) +
           "</span></div>"
       );
@@ -94,7 +123,7 @@
       );
     } else {
       parts.push(
-        "<p class=\"order-summary__foot\">Select your delivery area to include the delivery charge.</p>"
+        "<p class=\"order-summary__foot\">Select your ward to include the delivery charge.</p>"
       );
     }
 
@@ -214,8 +243,12 @@
       setFieldError("phone", "Enter a valid phone number (at least 10 digits).");
       ok = false;
     }
-    if (!area || !String(area.value || "").trim()) {
-      setFieldError("area", "Please select your delivery area.");
+    var areaVal = area ? String(area.value || "").trim() : "";
+    if (!areaVal) {
+      setFieldError("area", "Please select your ward.");
+      ok = false;
+    } else if (!isServiceWard(areaVal) || deliveryFeeBdtForArea(areaVal) == null) {
+      setFieldError("area", "Choose a ward from the list. We only deliver within these service areas.");
       ok = false;
     }
     if (!address || !String(address.value || "").trim()) {
@@ -231,15 +264,16 @@
     var qty = Math.round(Number(d.qty) || 0);
     var subtotal = unit * qty;
     var delivery = deliveryFeeBdtForArea(d.area);
-    var total = subtotal + delivery;
+    var deliveryNum = delivery != null ? delivery : 0;
+    var total = subtotal + deliveryNum;
     var lines = [
       "Order (MiniMart Zone)",
       "Product: " + d.product,
       "Qty: " + String(qty),
       "Unit price: " + formatBdt(unit),
       "Item subtotal: " + formatBdt(subtotal),
-      "Delivery area: " + d.area,
-      "Delivery charge: " + formatBdt(delivery),
+      "Ward / area: " + d.area,
+      "Delivery charge: " + formatBdt(deliveryNum),
       "Estimated total: " + formatBdt(total),
       "—",
       "Customer: " + d.name,
@@ -623,5 +657,6 @@
       });
   }
 
+  populateServiceWardSelect();
   start();
 })();
