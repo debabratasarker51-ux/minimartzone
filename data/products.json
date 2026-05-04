@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "name": "Mini Fiddle Leaf Fig (indoor)",
+      "price": "890",
+      "category": "indoor_plants",
+      "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=600&q=80",
+      "alt": "Green indoor plant in pot",
+      "badges": ["popular"]
+    },
+    {
+      "name": "Succulent trio set (ceramic pots)",
+      "price": "650",
+      "category": "indoor_plants",
+      "image": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=600&q=80",
+      "alt": "Small succulents in pots",
+      "badges": ["new"]
+    },
+    {
+      "name": "Decorative river pebbles (2kg, mixed color)",
+      "price": "320",
+      "category": "colorful_stones",
+      "image": "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=600&q=80",
+      "alt": "Smooth colorful stones",
+      "badges": []
+    },
+    {
+      "name": "Polished agate-style stones (bowl filler)",
+      "price": "480",
+      "category": "colorful_stones",
+      "image": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80",
+      "alt": "Polished decorative stones",
+      "badges": ["popular"]
+    },
+    {
+      "name": "Soft plush bear (medium)",
+      "price": "750",
+      "category": "toys",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+      "alt": "Teddy bear toy",
+      "badges": []
+    },
+    {
+      "name": "LED fairy lights (10m, warm white)",
+      "price": "420",
+      "category": "room_decoration",
+      "image": "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=600&q=80",
+      "alt": "String lights decoration",
+      "badges": ["new"]
+    },
+    {
+      "name": "Macrame wall hanging (cream)",
+      "price": "1,150",
+      "category": "room_decoration",
+      "image": "https://images.unsplash.com/photo-1523419409543-0c1df022bdd1?w=600&q=80",
+      "alt": "Macrame decor on wall",
+      "badges": ["popular"]
+    },
+    {
+      "name": "Desk organizer (bamboo)",
+      "price": "680",
+      "category": "daily_helpers",
+      "image": "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&q=80",
+      "alt": "Bamboo desk organizer",
+      "badges": []
+    },
+    {
+      "name": "Adjustable phone / tablet stand",
+      "price": "390",
+      "category": "accessories",
+      "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80",
+      "alt": "Phone stand on desk",
+      "badges": []
+    },
+    {
+      "name": "Minimal ceramic vase (matte white)",
+      "price": "560",
+      "category": "room_decoration",
+      "image": "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600&q=80",
+      "alt": "White ceramic vase",
+      "badges": []
+    }
+  ]
+}
