@@ -12,6 +12,8 @@
       return String(w).trim();
     });
   }
+  var ORDERS_ENABLED = CFG.ordersEnabled === true;
+
   var WARD_FEES = {};
   if (CFG.wardDeliveryBdt && typeof CFG.wardDeliveryBdt === "object") {
     for (var fk in CFG.wardDeliveryBdt) {
@@ -297,7 +299,7 @@
   if (productGrid) {
     productGrid.addEventListener("click", function (e) {
       var btn = e.target.closest(".js-open-order");
-      if (!btn) return;
+      if (!btn || btn.disabled) return;
       var card = btn.closest(".product-card");
       var name = card ? card.getAttribute("data-product") : "";
       var unitBdt = card ? parseInt(card.getAttribute("data-unit-price-bdt") || "0", 10) : 0;
@@ -563,6 +565,10 @@
       ord.type = "button";
       ord.className = "btn btn--primary js-open-order";
       ord.textContent = "Order Now";
+      if (!ORDERS_ENABLED) {
+        ord.disabled = true;
+        ord.title = "Ordering is paused right now.";
+      }
       body.appendChild(ord);
 
       article.appendChild(body);

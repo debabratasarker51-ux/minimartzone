@@ -76,4 +76,6 @@ window.MiniMartConfig = {
     "Ward 29 – Tikapara": 50,
     "Ward 30 – Daulatpur": 50,
   },
+  /** Set to true when you want customers to place orders again. */
+  ordersEnabled: false,
 };
